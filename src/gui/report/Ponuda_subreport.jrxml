@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report5_subreport5" pageWidth="555" pageHeight="300" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<style name="Crosstab Data Text" isDefault="false" hAlign="Center"/>
+	<parameter name="subIdPon" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     stavkaponuda.`jedCijena` AS stavkaponuda_jedCijena,
+     stavkaponuda.`kolicina` AS stavkaponuda_kolicina,
+     stavkaponuda.`dimenzije` AS stavkaponuda_dimenzije,
+     stavkaponuda.`opis` AS stavkaponuda_opis
+FROM
+     `stavkaponuda` stavkaponuda
+WHERE
+     stavkaponuda.`idPonuda` = $P{subIdPon}]]>
+	</queryString>
+	<field name="stavkaponuda_jedCijena" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stavkaponuda_kolicina" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stavkaponuda_dimenzije" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stavkaponuda_opis" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="ukupnaCijena" class="java.lang.Float" resetType="None">
+		<variableExpression><![CDATA[Float.valueOf($F{stavkaponuda_jedCijena}.floatValue()*$F{stavkaponuda_kolicina}.floatValue())]]></variableExpression>
+	</variable>
+	<variable name="sumaUkupneCijene" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$V{ukupnaCijena}]]></variableExpression>
+	</variable>
+	<variable name="sumaPDV" class="java.lang.Float">
+		<variableExpression><![CDATA[Float.valueOf($V{sumaUkupneCijene}.floatValue()*Float.valueOf("0.22").floatValue())]]></variableExpression>
+	</variable>
+	<variable name="ukupnaCijena_pdv" class="java.lang.Float">
+		<variableExpression><![CDATA[Float.valueOf($V{sumaUkupneCijene}.floatValue()+$V{sumaPDV}.floatValue())]]></variableExpression>
+	</variable>
+	<group name="tablica">
+		<groupExpression><![CDATA[$V{ukupnaCijena}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="2"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18">
+			<staticText>
+				<reportElement mode="Opaque" x="258" y="0" width="78" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Dimenzije]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="336" y="0" width="48" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Količina]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="384" y="0" width="89" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Jedinična cijena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="473" y="0" width="79" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Ukupna cijena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="258" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Opis]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19">
+			<textField>
+				<reportElement x="384" y="0" width="89" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="12" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{stavkaponuda_jedCijena}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="0" width="48" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="12" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{stavkaponuda_kolicina}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="258" y="0" width="78" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="12" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{stavkaponuda_dimenzije}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="258" height="18"/>
+				<textElement>
+					<font size="12" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{stavkaponuda_opis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="473" y="0" width="79" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[String.valueOf($V{ukupnaCijena})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="135">
+			<textField pattern="">
+				<reportElement x="473" y="3" width="79" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[String.valueOf($V{sumaUkupneCijene}) + " kn"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="395" y="3" width="78" height="18"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Iznos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="473" y="36" width="79" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[String.valueOf($V{ukupnaCijena_pdv}) + " kn"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="395" y="21" width="78" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[PDV 22%]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="473" y="21" width="79" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[String.valueOf($V{sumaPDV}) + " kn"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="384" y="37" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ukupan iznos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="384" y="1" width="168" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Programming temp\\StolarijaPurgar\\src\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idOtp" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     otpremnica.`idOtp` AS otpremnica_idOtp,
+     otpremnica.`datum` AS otpremnica_datum,
+     otpremnica.`nacin` AS otpremnica_nacin,
+     otpremnica.`izdao` AS otpremnica_izdao,
+     zaposlenici.`ime` AS zaposlenici_ime,
+     zaposlenici.`prezime` AS zaposlenici_prezime,
+     racun.`mjestoIzdavanja` AS racun_mjestoIzdavanja,
+     partner.`naziv` AS partner_naziv,
+     partner.`ime` AS partner_ime,
+     partner.`prezime` AS partner_prezime,
+     partner.`mjesto` AS partner_mjesto,
+     partner.`telefon` AS partner_telefon,
+     partner.`postBroj` AS partner_postBroj,
+     partner.`adresa` AS partner_adresa
+FROM
+     `zaposlenici` zaposlenici INNER JOIN `otpremnica` otpremnica ON zaposlenici.`idZap` = otpremnica.`izdao`
+     INNER JOIN `racun` racun ON otpremnica.`idRacuna` = racun.`idRacuna`
+     INNER JOIN `partner` partner ON racun.`idPartner` = partner.`idPartner`
+WHERE
+     otpremnica.`idOtp` = $P{idOtp}]]>
+	</queryString>
+	<field name="otpremnica_datum" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="otpremnica_nacin" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="otpremnica_idOtp" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="racun_mjestoIzdavanja" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="zaposlenici_ime" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="zaposlenici_prezime" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="partner_naziv" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="partner_ime" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="partner_prezime" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="partner_mjesto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="partner_adresa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="partner_postBroj" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="variable1" class="java.lang.String">
+		<variableExpression><![CDATA[String.valueOf($F{otpremnica_datum}.getDate())+ "." +
+String.valueOf(1 + $F{otpremnica_datum}.getMonth()) + "." +
+String.valueOf(1900 + $F{otpremnica_datum}.getYear()) + "."]]></variableExpression>
+	</variable>
+	<background>
+		<band height="1"/>
+	</background>
+	<title>
+		<band height="125">
+			<textField>
+				<reportElement x="378" y="31" width="64" height="35"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{otpremnica_idOtp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="149" y="31" width="229" height="35"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTPREMNICA br.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="284" y="0" width="271" height="20"/>
+				<textElement textAlignment="Right">
+					<font pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["U" + " " + $F{racun_mjestoIzdavanja} + ", dana " +
+String.valueOf($F{otpremnica_datum}.getDate())+ "." +
+String.valueOf(1 + $F{otpremnica_datum}.getMonth()) + "." +
+String.valueOf(1900 + $F{otpremnica_datum}.getYear()) + "."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="79" width="554" height="20"/>
+				<textElement>
+					<font pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Za " + $F{partner_adresa} + ", " + $F{partner_mjesto} + 
+"(" + $F{partner_postBroj}.toString() + "), " + $F{partner_naziv}
++ ", " + $F{partner_ime} + " " + $F{partner_prezime}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="98" width="554" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<detail>
+		<band height="78">
+			<subreport>
+				<reportElement x="1" y="0" width="554" height="78"/>
+				<subreportParameter name="subIdOtp">
+					<subreportParameterExpression><![CDATA[$P{idOtp}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "Otpremnica_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="29">
+			<textField>
+				<reportElement x="1" y="0" width="148" height="20"/>
+				<textElement>
+					<font pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Način otpreme: " + $F{otpremnica_nacin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="0" width="153" height="20"/>
+				<textElement>
+					<font pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Izdao: " + $F{zaposlenici_ime} + " " + $F{zaposlenici_prezime}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="302" y="0" width="57" height="20"/>
+				<textElement>
+					<font pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Kontrolirao:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="359" y="19" width="61" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="420" y="0" width="42" height="20"/>
+				<textElement>
+					<font pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Primio:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="462" y="20" width="61" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

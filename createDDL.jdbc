@@ -1,0 +1,8 @@
+CREATE TABLE zaposlenici (idZap INTEGER AUTO_INCREMENT NOT NULL, mjesto VARCHAR(255), postBroj INTEGER, prezime VARCHAR(255), adresa VARCHAR(255), ime VARCHAR(255), matBroj VARCHAR(255), telefon VARCHAR(255), ziroRacun VARCHAR(255), PRIMARY KEY (idZap))
+CREATE TABLE ponuda (idPonuda INTEGER AUTO_INCREMENT NOT NULL, mjestoKreiranja VARCHAR(255), opisHeader TEXT(64000), datumKreiranja DATETIME, opisFooter TEXT(64000), idPartner INTEGER, stat INTEGER, PRIMARY KEY (idPonuda))
+CREATE TABLE vrpartnera (idVrsta INTEGER AUTO_INCREMENT NOT NULL, vrsta VARCHAR(255), PRIMARY KEY (idVrsta))
+CREATE TABLE stavkaotpremnice (idOtp INTEGER NOT NULL, idStPon INTEGER NOT NULL, PRIMARY KEY (idOtp, idStPon))
+CREATE TABLE stavkaponuda (idStPon INTEGER AUTO_INCREMENT NOT NULL, opis VARCHAR(255), dimenzije VARCHAR(255), idPonuda INTEGER, kolicina INTEGER, jedCijena FLOAT, PRIMARY KEY (idStPon))
+CREATE TABLE partner (telefon VARCHAR(255), mjesto VARCHAR(255), naziv VARCHAR(255), postBroj INTEGER, prezime VARCHAR(255), adresa VARCHAR(255), ime VARCHAR(255), maticniBr VARCHAR(255), ziroRac VARCHAR(255), idPartner INTEGER NOT NULL, idVrsta INTEGER NOT NULL, PRIMARY KEY (idPartner, idVrsta))
+CREATE TABLE otpremnica (idOtp INTEGER AUTO_INCREMENT NOT NULL, idPonuda INTEGER, datum DATE, izdao INTEGER, PRIMARY KEY (idOtp))
+CREATE TABLE racun (mjestoIzdavanja VARCHAR(255), opisHeader TEXT(64000), datumIzdavanja DATETIME, opisFooter TEXT(64000), iznos DOUBLE, idRacun INTEGER NOT NULL, idPonuda INTEGER NOT NULL, PRIMARY KEY (idRacun, idPonuda))

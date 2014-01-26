@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report1" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Programming temp\\StolarijaPurgar\\src\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idPonude" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     p.`idPonuda`,
+     p.`datumKreiranja`,
+     p.`mjestoKreiranja`,
+     p.`opisHeader`,
+     p.`opisFooter`,
+     par.`naziv`,
+     par.`ime`,
+     par.`prezime`,
+     par.`mjesto`,
+     par.`postBroj`,
+     par.`adresa`,
+     par.`maticniBr`,
+     par.`telefon`,
+     vp.`vrsta`
+FROM
+     `Partner` par INNER JOIN `Ponuda` p ON par.`idPartner` = p.`idPartner`
+     INNER JOIN `Vrpartnera` vp ON par.`idVrsta` = vp.`idVrsta`
+WHERE
+     p.idPonuda = $P{idPonude}]]>
+	</queryString>
+	<field name="idPonuda" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="datumKreiranja" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mjestoKreiranja" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="opisHeader" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="opisFooter" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="naziv" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ime" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prezime" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mjesto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="postBroj" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="adresa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maticniBr" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefon" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vrsta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="mjestoK" class="java.lang.String">
+		<variableExpression><![CDATA[$F{mjestoKreiranja}]]></variableExpression>
+	</variable>
+	<variable name="datumK" class="java.lang.String">
+		<variableExpression><![CDATA[String.valueOf($F{datumKreiranja}.getDate()) + "." +
+String.valueOf(1 + $F{datumKreiranja}.getMonth()) + "." +
+String.valueOf(1900 + $F{datumKreiranja}.getYear()) + "."]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="187">
+			<textField>
+				<reportElement x="342" y="150" width="75" height="35"/>
+				<textElement>
+					<font size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{idPonuda}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="143" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="184" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="67" y="150" width="424" height="35"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PONUDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="96" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[TEL. 042/ 611-075]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="16" width="125" height="20"/>
+				<textElement/>
+				<text><![CDATA[STOLARIJA "PURGAR"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="126" height="20"/>
+				<textElement/>
+				<text><![CDATA[VL. MATIJA PURGAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="56" width="149" height="20"/>
+				<textElement/>
+				<text><![CDATA[NOVI MAROF, REMETINEC 26]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="76" width="148" height="20"/>
+				<textElement/>
+				<text><![CDATA[MAT.BR. 2805980321709]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[STOLARSKI OBRT]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="311">
+			<textField>
+				<reportElement x="1" y="17" width="554" height="33"/>
+				<textElement>
+					<font size="12" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{opisHeader}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="188" width="554" height="54"/>
+				<textElement>
+					<font size="12" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{opisFooter}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="-167" width="285" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" pdfFontName="Helvetica" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ime} + " " + $F{prezime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="-147" width="285" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" pdfFontName="Helvetica" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{postBroj}.toString() + " " + $F{mjesto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="-127" width="285" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" pdfFontName="Helvetica" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{adresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="-107" width="285" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" pdfFontName="Helvetica" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["MAT.BR: " + $F{maticniBr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="-87" width="285" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" pdfFontName="Helvetica" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["TEL " + $F{telefon}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="60" width="554" height="128"/>
+				<subreportParameter name="subIdPon">
+					<subreportParameterExpression><![CDATA[$P{idPonude}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "Ponuda_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band>
+			<textField>
+				<reportElement x="1" y="-69" width="193" height="20"/>
+				<textElement>
+					<font pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{mjestoK} + ", " + $V{datumK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="457" y="-49" width="44" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(potpis)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="417" y="-50" width="121" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="27"/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
